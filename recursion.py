@@ -1,3 +1,4 @@
+import turtle
 PEN_WIDTH = 1
 MARGIN = 20
 
@@ -25,6 +26,7 @@ def init( size: int, speed: int ):
     turtle.pensize( PEN_WIDTH )
     turtle.penup()
     turtle.setposition( 0, 0 )
+    turtle.pendown()
 
 def finish():
     """
@@ -38,32 +40,49 @@ def finish():
 BOX_SIZE = 1000
 
 # By how much to reduce the square's sides at each successive depth
-SHRINKAGE = 1 / 3
+def try1(size: int ):
+    shrink = int(size * (0.35))
+    turtle.forward (size)
+    turtle.left(90)
+    turtle.forward (size/2)
+    turtle.left(45)
+    turtle.forward(shrink)
+    turtle.left(90)
+    turtle.forward(shrink)
+    turtle.left(90)
+    turtle.forward(shrink)
+    turtle.left(90)
+    turtle.forward(shrink)
+    turtle.left(45)
+    turtle.forward(size/2)
+    turtle.left(90)
+    turtle.forward(size)
+    turtle.left(90)
+    turtle.forward(size/2)
+    turtle.left(45)
+    turtle.forward(shrink)
+    turtle.left(90)
+    turtle.forward(shrink)
+    turtle.left(90)
+    turtle.forward(shrink)
+    turtle.left(90)
+    turtle.forward(shrink)
+    turtle.left(45)
+    turtle.forward(size/2)
+    turtle.left(90)
 
-def probsolv_1( _: int ):
+def main() -> None:
     """
-    Move the turtle to the proper position and heading to draw the first
-    nested (depth-1) square, assuming that the turtle is in the position and
-    heading it would be in after having drawn the square at the current depth.
-    This function moves the turtle to the proper spot for the problem-solving
-    session assignment.
-    :param _: (unused) the length of a side of a square at the current depth
+    The main function prompts the user to enter a TT program.  It then expands
+    that program to the basic TT commands and then executes them.
+    :return: None
     """
-    pass
+    init(100, 1)
+    try1(100)
 
-def probsolv_2( side_size: int ):
-    """
-    Move the turtle to the proper position and heading to draw the second
-    nested (depth-1) square, assuming that the turtle is in the position and
-    heading it would be in after having drawn the square at the current depth.
-    This function moves the turtle to the proper spot for the problem-solving
-    session assignment.
-    :param side_size: the length of a side of a square at the current depth
-    """
-    turtle.forward ( side_size * ( 1 - SHRINKAGE ) )
-    turtle.left( 90 )
-    turtle.forward ( side_size * ( 1 - SHRINKAGE ) )
-    turtle.right( 90 )
+    print('Close the graphic window when done.')
+    turtle.mainloop()
 
-move_to_subsquare_1 = probsolv_1
-move_to_subsquare_2 = probsolv_2
+
+if __name__ == '__main__':
+    main()
