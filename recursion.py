@@ -1,4 +1,5 @@
 import turtle
+import math
 PEN_WIDTH = 1
 MARGIN = 20
 
@@ -28,48 +29,49 @@ def init( size: int, speed: int ):
     turtle.setposition( 0, 0 )
     turtle.pendown()
 
-def finish():
-    """
-    Prepare to end the turtle graphics session.
-    Wait for the user to close the window.
-    """
-    print( "Please close the turtle canvas window." )
-    turtle.done()
+def shrink(size: float):
+    size = (((size/2)/math.sqrt(2)))
+    return size
 
-# Length of highest depth square's side
-BOX_SIZE = 1000
+def drawsqr(size: float):
+    turtle.color('blue')
+    for i in range(4):
+        turtle.forward(size)
+        turtle.left(90)
 
-# By how much to reduce the square's sides at each successive depth
-def try1(size: int ):
-    shrink = int(size * (0.35))
-    turtle.forward (size)
-    turtle.left(90)
-    turtle.forward (size/2)
-    turtle.left(45)
-    turtle.forward(shrink)
-    turtle.left(90)
-    turtle.forward(shrink)
-    turtle.left(90)
-    turtle.forward(shrink)
-    turtle.left(90)
-    turtle.forward(shrink)
-    turtle.left(45)
-    turtle.forward(size/2)
-    turtle.left(90)
-    turtle.forward(size)
-    turtle.left(90)
-    turtle.forward(size/2)
-    turtle.left(45)
-    turtle.forward(shrink)
-    turtle.left(90)
-    turtle.forward(shrink)
-    turtle.left(90)
-    turtle.forward(shrink)
-    turtle.left(90)
-    turtle.forward(shrink)
-    turtle.left(45)
-    turtle.forward(size/2)
-    turtle.left(90)
+def rec_sqr(size: float, depth: int):
+    if depth == 0:
+        return
+    else:
+        turtle.color('orange')
+        turtle.forward (size)
+        turtle.left(90)
+        turtle.forward (size/2)
+        turtle.left(45)
+
+        drawsqr(shrink(size))
+
+        rec_sqr(shrink(size), depth -1)
+
+        turtle.right(45)
+
+        turtle.forward (size/2)
+        turtle.left(90)
+        turtle.forward (size)
+        turtle.left(90)
+        turtle.forward (size/2)
+        turtle.left(45)
+
+        drawsqr(shrink(size))
+
+        rec_sqr(shrink(size), depth -1)
+
+        turtle.right(45)
+        
+        turtle.forward (size/2)
+        turtle.left(90)
+
+        return
 
 def main() -> None:
     """
@@ -77,8 +79,10 @@ def main() -> None:
     that program to the basic TT commands and then executes them.
     :return: None
     """
-    init(100, 1)
-    try1(100)
+    size = int(input('Enter the size of the sides:'))
+    depth = int(input('Enter the depth:'))
+    init(size, 100)
+    rec_sqr(size, depth)
 
     print('Close the graphic window when done.')
     turtle.mainloop()
